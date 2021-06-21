@@ -3,6 +3,7 @@ require('dotenv').config();
 const { execSync } = require('child_process');
 
 const fakeRequest = require('supertest');
+const characters = require('../data/characters');
 const app = require('../lib/app');
 const client = require('../lib/client');
 
@@ -31,31 +32,28 @@ describe('app routes', () => {
       return client.end(done);
     });
 
-    test('returns animals', async() => {
+    test('returns characters', async() => {
 
       const expectation = [
         {
           'id': 1,
-          'name': 'bessie',
-          'coolfactor': 3,
-          'owner_id': 1
+          'name': 'Dean Winchester',
+          'cool_factor': 10,
         },
         {
           'id': 2,
-          'name': 'jumpy',
-          'coolfactor': 4,
-          'owner_id': 1
+          'name': 'Sam Winchester',
+          'cool_factor': 6,
         },
         {
           'id': 3,
-          'name': 'spot',
-          'coolfactor': 10,
-          'owner_id': 1
+          'name': 'Klaus Mikaelson',
+          'cool_factor': 10,
         }
       ];
 
       const data = await fakeRequest(app)
-        .get('/animals')
+        .get('/characters')
         .expect('Content-Type', /json/)
         .expect(200);
 

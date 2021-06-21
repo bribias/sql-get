@@ -30,7 +30,7 @@ async function run() {
                     INSERT INTO characters (name, cool_factor, category, owner_id)
                     VALUES ($1, $2, $3, $4);
                 `,
-        [character.name, character.cool_factor, user.id]);
+        [character.name, character.cool_factor, character.category, user.id]);
       })
     );
     
