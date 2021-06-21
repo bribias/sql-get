@@ -15,9 +15,9 @@ async function run() {
               CREATE TABLE users (
               id SERIAL PRIMARY KEY,
               email VARCHAR(256) NOT NULL,
-              has VARCHAR(256) NOT NULL
+              hash VARCHAR(256) NOT NULL
             );
-            CREAT TABLE characters (
+            CREATE TABLE characters (
               id SERIAL PRIMARY KEY NOT NULL,
               name VARCHAR(256) NOT NULL,
               category VARCHAR(256) NOT NULL,
