@@ -1,75 +1,121 @@
-// require('dotenv').config();
+require('dotenv').config();
 
-// const { execSync } = require('child_process');
-// // const { exception } = require('console');
+const { execSync } = require('child_process');
+// const { exception } = require('console');
 
-// const fakeRequest = require('supertest');
-// const characters = require('../data/characters');
+const fakeRequest = require('supertest');
 
-// const app = require('../lib/app');
-// const client = require('../lib/client');
+const app = require('../lib/app');
+const client = require('../lib/client');
 
-// describe('app routes', () => {
-//   describe('routes', () => {
-//     let token;
+const characters = [
+  {
+    'id': 1,
+    'name': 'Dean Winchester',
+    'cool_factor': 10,
+    'category_id': 1,
+    'owner_id': 1,
+    'category': 'hero'
+  },
+  {
+    'id': 1,
+    'name': 'Sam Winchester',
+    'cool_factor': 6,
+    'category_id': 1,
+    'owner_id': 1,
+    'category': 'hero'
+  },
+  {
+    'id': 2,
+    'name': 'Klaus Mikaelson',
+    'cool_factor': 10,
+    'category_id': 2,
+    'owner_id': 1,
+    'category': 'villian'
+  },
+  {
+    'id': 2,
+    'name': 'Damon Salvetore',
+    'cool_factor': 8,
+    'category_id': 2,
+    'owner_id': 1,
+    'category': 'villian'
+  },
+  {
+    'id': 2,
+    'name': 'Rebeka Mikaelson',
+    'cool_factor': 9,
+    'category_id': 2,
+    'owner_id': 1,
+    'category': 'villian'
+  },
+  {
+    'id': 1,
+    'name': 'Stefan Salvetore',
+    'cool_factor': 1,
+    'category_id': 1,
+    'owner_id': 1,
+    'category': 'hero'
+  },
+  {
+    'id': 1,
+    'name': 'Buffy Summers',
+    'cool_factor': 20,
+    'category_id': 1,
+    'owner_id': 1,
+    'category': 'hero'
+  },
+  {
+    'id': 1,
+    'name': 'Angel',
+    'cool_factor': 2,
+    'category_id': 1,
+    'owner_id': 1,
+    'category': 'hero'
+  },
+  {
+    'id': 2,
+    'name': 'Spike',
+    'cool_factor': 10,
+    'category_id': 2,
+    'owner_id': 1,
+    'category': 'villian'
+  }
+];
 
-//     beforeAll(async done => {
-//       execSync('npm run setup-db');
+describe('app routes', () => {
+  describe('routes', () => {
+    let token;
 
-//       client.connect();
+    beforeAll(async done => {
+      execSync('npm run setup-db');
 
-//       const signInData = await fakeRequest(app)
-//         .post('/auth/signup')
-//         .send({
-//           email: 'jon@user.com',
-//           password: '1234'
-//         });
+      client.connect();
 
-//       token = signInData.body.token; // eslint-disable-line
+      const signInData = await fakeRequest(app)
+        .post('/auth/signup')
+        .send({
+          email: 'jon@user.com',
+          password: '1234'
+        });
 
-//       return done();
-//     });
+      token = signInData.body.token; // eslint-disable-line
 
-//     afterAll(done => {
-//       return client.end(done);
-//     });
+      return done();
+    });
 
-//     test('returns characters', async () => {
+    afterAll(done => {
+      return client.end(done);
+    });
 
-//       const characters = [
-//         {
-//           'id': 1,
-//           'name': 'Dean Winchester',
-//           'cool_factor': 10,
-//           owner_id: 1,
-//         },
-//         {
-//           'id': 2,
-//           'name': 'Sam Winchester',
-//           'cool_factor': 6,
-//           owner_id: 1,
-//         },
-//         {
-//           'id': 3,
-//           'name': 'Klaus Mikaelson',
-//           'cool_factor': 10,
-//           owner_id: 1,
-//         }
-//       ];
+    test('/GET all characters', async () => {
+      const expectation = characters;
+      const data = await fakeRequest(app)
+        .get('/characters')
+        .expect('Content-Type', /json/)
+        .expect(200);
 
-//       // const exception = characters;
-
-//       const data = await fakeRequest(app)
-//         .get('/characters')
-//         .expect('Content-Type', /json/)
-//         .expect(200);
-
-//       expect(data.body).toEqual({
-//         'id': 1,
-//         'name': 'Dean Winchester',
-//         'cool_factor': 10,
-//         owner_id: 1,
-//       });
-//     });
-//   });
-// });
+      expect(data.body).toEqual(expectation);
+    });
+  });
+});
