@@ -117,5 +117,21 @@ describe('app routes', () => {
 
       expect(data.body).toEqual(expectation);
     });
+
+    test('/GET characters/1 returns a character', async () => {
+      const expectation = {
+        'id': 1,
+        'name': 'Dean Winchester',
+        'cool_factor': 10,
+        'category_id': 1,
+
+      };
+      const data = await fakeRequest(app)
+        .get('/characters/1')
+        .expect('Content-Type', /json/)
+        .expect(200);
+      
+      expect(data.body).toEqual(expectation);
+    });
   });
 });
