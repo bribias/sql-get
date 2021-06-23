@@ -1,4 +1,3 @@
-
 const characters = [
   {
     id: 1,
