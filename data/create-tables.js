@@ -15,13 +15,17 @@ async function run() {
               CREATE TABLE users (
               id SERIAL PRIMARY KEY,
               email VARCHAR(256) NOT NULL,
-              hash VARCHAR(256) NOT NULL
+              hash VARCHAR(512) NOT NULL
+            );
+            CREATE TABLE categories (
+              id SERIAL PRIMARY KEY,
+              category VARCHAR(512) NOT NULL
             );
             CREATE TABLE characters (
               id SERIAL PRIMARY KEY NOT NULL,
               name VARCHAR(256) NOT NULL,
-              category VARCHAR(256) NOT NULL,
               cool_factor INTEGER NOT NULL,
+              category_id INTEGER NOT NULL REFERENCES categories(id),
               owner_id INTEGER NOT NULL REFERENCES users(id)
             );
         `);
